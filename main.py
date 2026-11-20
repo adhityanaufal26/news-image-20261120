@@ -1,17 +1,20 @@
+# Entry program for make.fun competition news-image-20261120.
+# Copies the entry.png beside this file to /output/entry.png
+# (MAKEFUN_OUTPUT_DIR stands in for /output outside the grader).
+# Standard library only.
+
 import os
 import shutil
-import sys
+from pathlib import Path
 
 
-def main() -> int:
-    here = os.path.dirname(os.path.abspath(__file__))
-    src = os.path.join(here, "entry.png")
-    out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
-    os.makedirs(out_dir, exist_ok=True)
-    dst = os.path.join(out_dir, "entry.png")
-    shutil.copyfile(src, dst)
-    return 0
+def main() -> None:
+    here = Path(__file__).resolve().parent
+    src = here / "entry.png"
+    out_dir = Path(os.environ.get("MAKEFUN_OUTPUT_DIR", "/output"))
+    out_dir.mkdir(parents=True, exist_ok=True)
+    shutil.copyfile(src, out_dir / "entry.png")
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    main()
